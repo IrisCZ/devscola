@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="author" content="Iris Carballo">
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+    <title>Formulario Inscripcion</title>
+  </head>
+  <body>
+    <div class="form-container">
+      <form>
+        <legend>FORMULARIO DE INSCRIPCIÓN</legend>
+        <section class="field2Cols">
+          <section class="name">
+            <label>Nombre:</label>
+            <input type="text" name="firstName">
+          </section>
+          <section class="age">
+            <label>Edad:</label>
+            <input type="text" name="age">
+          </section>
+        </section>
+        <section>
+          <label>Dirección:</label>
+          <input type="text" name="address">
+        </section>
+        <section>
+          <label>Email:</label>
+          <input type="email" name="email">
+        </section>
+        <section class="selectorField">
+          <label>Nivel de inglés:</label>
+          <div class="selectorContainer">
+            <div class="selector">
+              <input type="radio" id= "checkHigh" name="englishLevel" value="high">
+              <label for="checkHigh" class= "selector">Alto</label>
+            </div>
+            <div class="selector">
+              <input type="radio" id= "checkMedium" name="englishLevel" value="medium" checked>
+              <label for="checkMedium" class= "selector">Medio</label>
+            </div>
+            <div class="selector">
+              <input type="radio" id= "checkLow" name="englishLevel" value="low">
+              <label for="checkLow" class= "selector">Bajo</label>
+            </div>
+          </div>
+        </section>
+        <section>
+          <label>Nivel de estudios:</label>
+          <input type="text" name="studiesLevel">
+        </section>
+        <section>
+          <label>Experiencia previa:</label>
+          <textarea type="text" name="experience" rows="2"></textarea>
+        </section>
+        <button>
+        </button>
+      </form>
+
+    </div>
+  </body>
+</html>
