@@ -7,7 +7,6 @@ module("About Prototypal Inheritance (topics/about_prototypal_inheritance.js)");
 var Mammal = function(name) {
     this.name = name;
 }
-
 // things that don't need to be set in the constructor should be added to the constructor's prototype property.
 Mammal.prototype = {
     sayHi: function() {

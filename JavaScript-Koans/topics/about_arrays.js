@@ -18,7 +18,7 @@ test("length", function() {
 
 test("splice", function() {
     var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    var workingWeek = daysOfWeek.splice(0,5);
+    var workingWeek = daysOfWeek.splice(0, 5);
     var weekend = daysOfWeek;
 
     deepEqual(workingWeek, ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], 'what is the value of workingWeek?');
@@ -30,8 +30,8 @@ test("stack methods", function() {
     stack.push("first");
     stack.push("second");
 
-    equal('second', stack.pop(), 'what will be the first value popped off the stack?');
-    equal('first', stack.pop(), 'what will be the second value popped off the stack?');
+    equal("second", stack.pop(), 'what will be the first value popped off the stack?');
+    equal("first", stack.pop(), 'what will be the second value popped off the stack?');
 });
 
 test("queue methods", function() {

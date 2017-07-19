@@ -24,14 +24,14 @@ test("for in", function() {
 	};
 	var result = "";
 	// for in enumerates the property names of an object
-	for (var property_name in person) {
-  		result = result + property_name;
+	for (var key in person) {
+  		result = result + key;
 	}
 	equal("nameage", result, 'what is the value of result?');
 });
 
 test("ternary operator", function() {
-	var fruit = true ? "apple" : "orange";
+	var fruit = (true ? "apple" : "orange");
 	equal("apple", fruit, 'what is the value of fruit?');
 
 	fruit = false ? "apple" : "orange";
