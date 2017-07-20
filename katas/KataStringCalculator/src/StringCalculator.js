@@ -14,3 +14,62 @@
 // he first line is optional. all existing scenarios should still be supported
 // Calling Add with a negative number will throw an exception "negatives not allowed" - and the negative that was passed.
 // if there are multiple negatives, show all of them in the exception message
+
+var stringCalculator = {
+  DEFAULT_DELIMITER: ",",
+
+  _getDelimiter: function(string){
+    var containsDelimiter = isNaN(string[0]) && string[1] === "\n";
+    var delimiter = this.DEFAULT_DELIMITER;
+    if (containsDelimiter) {
+      delimiter = string[0];
+    }
+    return delimiter;
+  },
+
+  _transformToInt: function(stringNumber){
+    if (stringNumber === ""){
+      return 0;
+    }
+    return parseInt(stringNumber);
+  },
+
+  _splitNumbers: function(string){
+    var delimiter = this._getDelimiter(string);
+    var numbers = string.replace(/\n/g, delimiter).split(delimiter);
+    for(var i = 0; i<numbers.length; i++){
+      numbers[i] = this._transformToInt(numbers[i]);
+    }
+    return numbers;
+  },
+
+  _isWrongNumber: function(number){
+    return number < 0;
+  },
+
+  _findErrorNumbers: function(numbers){
+    var errors = [];
+    for(var i = 0; i<numbers.length; i++){
+      if (this._isWrongNumber(numbers[i])){
+        errors.push(numbers[i]);
+      }
+    }
+    return errors;
+  },
+
+  add: function(stringNumbers){
+    var total = 0;
+    var numbers = this._splitNumbers(stringNumbers);
+    var errors = this._findErrorNumbers(numbers);
+
+    if (errors.length > 0){
+      return "Error. Numbers "+errors.join(" and ")+" not allowed";
+    }
+
+    for(var i = 0; i<numbers.length; i++){
+      total = total + numbers[i];
+    }
+
+    return total;
+  }
+}
