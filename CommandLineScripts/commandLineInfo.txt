@@ -1,0 +1,26 @@
+type NUL > errors.txt --> creates empty text file called errors.
+
+cp --> copy
+mv --> move
+rm --> remove
+mkdir --> create directories
+
+-u --> update
+
+* --> matches any characters
+? --> matches all characters
+[:alpnum:]  --> alphanumeric characters
+[:alpha:] --> alphabetic characters
+[:digit:] --> numerals
+[:upper:] --> uppercases
+[:lower:] --> lowercases
+[!characters] --> no member of a set of characters
+
+* --> all filenames
+g* --> filenames that start with g
+b*.txt --> filenames that start with b and ends with .txt
+Data?? --> filename that start with Data and is followed by 3 characters
+[abc]* --> filename that start with a b or c and followed by other characters
+[[:upper:]]* --> filename that starts with uppercasses 
+*[![:lower:]] --> filename that not ends with lowercases
+
