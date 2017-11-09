@@ -1,9 +1,10 @@
 var NUMBER_OF_CARDS = 24;
 var container = document.querySelector('.container');
-var attemptsCounter = document.querySelector('.attemptsCounter');
+var attemptsCounter = document.querySelector('.attemptsCounter').innerHTML;
 var attemptsCount = 0;
 var matchesCounter = document.querySelector('.matchesCounter');
 var matchesCount = 0;
+
 var Card = function(container) {
   this.id = getRandomInt();
   var frontClass = 'front'+ this.id;
@@ -50,15 +51,13 @@ function select(card) {
 }
 function compareCards(){
   if(cardsToCompare[0].id === cardsToCompare[1].id){
-    cardsToCompare[0].block();
-    cardsToCompare[1].block();
-    cardsToCompare.splice(0, 2);
+    blockCardsToCompare(cardsToCompare[0], cardsToCompare[1]);
     counter(++matchesCount, matchesCounter);
-    counter(++attemptsCount, attemptsCounter);
+    ++attemptsCounter;
     if(matchesCount === 12){
       setTimeout(function() {
-        alert("¡Lo has conseguido! ¡Vuelve a empezar!");
         stopTime();
+        showModal();
       }, 1000);
     }
     return;
@@ -67,7 +66,12 @@ function compareCards(){
     cardsToCompare[0].reverse();
     cardsToCompare[1].reverse();
     cardsToCompare.splice(0, 2);
-    counter(++attemptsCount, attemptsCounter);
+    ++attemptsCounter;
+    attemptsCounter.innerHTML = attemptsCounter;
+
+    console.log(attemptsCounter);
+
+    // counter(++attemptsCount, attemptsCounter);
   }, 800);
 }
 var ids = [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12];
@@ -109,6 +113,20 @@ function stopTime() {
 }
 timer();
 
+function blockCardsToCompare(cardA, cardB) {
+  cardA.block();
+  cardB.block();
+  cardsToCompare = [];
+}
+
 function refreshPage(){
     window.location.reload();
+}
+
+function showModal(){
+  document.querySelector('.modal-window').classList.add("modal-window-display");
+}
+
+function closeModal(){
+  document.querySelector('.modal-window').classList.remove("modal-window-display");
 }

@@ -17,6 +17,7 @@ main {
   grid-template-columns: repeat(7, 1fr);
   grid-template-columns: repeat(7, 1fr);
   line-height: 2rem;
+  z-index: 0;
 }
 .container {
   padding: 2rem;
@@ -128,4 +129,69 @@ button{
   background: none;
   font-family: 'Press Start 2P', cursive;
   cursor: pointer;
+}
+
+/*modal*/
+
+.modal-window {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.25);
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+  opacity: 1;
+  color: #000;
+  margin: none;
+  pointer-events: none;
+}
+
+.modal-window>div {
+  width: 40%;
+  height: 15em;
+  position: relative;
+  margin: 10% auto;
+  padding: 4rem;
+  background: #fff;
+  color: #444;
+  text-align: center;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  box-shadow: 1px 3px 6px 3px #1d1d1d;
+}
+.modal-window-display {
+  display: none;
+}
+.modal-close {
+  color: #aaa;
+  line-height: 50px;
+  font-size: 0.8em;
+  position: absolute;
+  right: 3em;
+  text-align: center;
+  top: 0;
+  width: 4em;
+  text-decoration: none;
+}
+
+.modal-close:hover {
+  color: #000;
+}
+
+.modal-window .text {
+  grid-row: 1/1;
+  grid-column: 1/span 3;
+  font-size: 1em;
+  margin: 0 0 15px;
+}
+.modal-window .yesOrNot {
+  grid-column: 2/2;
+}
+
+.modal-window button{
+  width: 6em;
+  height: 2em;
+  color: #000;
 }

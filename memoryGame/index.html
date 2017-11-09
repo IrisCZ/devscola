@@ -26,18 +26,26 @@
       </div>
       <div>
         <span>Attempts</span>
-        <div class="attemptsCounter">
-          <p>0</p>
-        </div>
+        <div class="attemptsCounter">0</div>
 
       </div>
       <div class="newGameSection">
         <button type="button" name="New Game"  onClick="refreshPage()">New Game</button>
       </div>
     </aside>
-
   </main>
-
+  <div class="modal-window">
+    <div>
+      <a href="#modal-close" title="Close" class="modal-close" onclick="closeModal()">Close</a>
+      <div class="text">
+        <h1>¡Lo has conseguido! ¿Otra partida?</h1>
+      </div>
+      <div class="yesOrNot">
+        <button type="button" name="Yes"  onClick="refreshPage()">Yes</button>
+        <button type="button" name="No"  onClick="closeModal()">No</button>
+      </div>
+    </div>
+  </div>
 
 <script src="assets/js/functions.js" type="text/javascript"></script>
 </body>
