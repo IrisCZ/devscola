@@ -20,9 +20,7 @@
       </div>
       <div>
         <span>Matches</span>
-        <div class="matchesCounter">
-          <p>0</p>
-        </div>
+        <div class="matchesCounter">0</div>
       </div>
       <div>
         <span>Attempts</span>
@@ -38,11 +36,21 @@
     <div>
       <a href="#modal-close" title="Close" class="modal-close" onclick="closeModal()">Close</a>
       <div class="text">
-        <h1>¡Lo has conseguido! ¿Otra partida?</h1>
+        <p>¡Lo has conseguido! ¿Otra partida?</p>
       </div>
       <div class="yesOrNot">
         <button type="button" name="Yes"  onClick="refreshPage()">Yes</button>
         <button type="button" name="No"  onClick="closeModal()">No</button>
+      </div>
+      <div class="wallOfFame">
+        <span>Wall of fame</span>
+        <table class="tableFame">
+          <tr class="titles">
+            <th>TIME</th>
+            <th>MATCHES</th>
+            <th>DATE</th>
+          </tr>
+        </table>
       </div>
     </div>
   </div>

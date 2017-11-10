@@ -15,7 +15,7 @@ main {
   background-size: cover;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   line-height: 2rem;
   z-index: 0;
 }
@@ -141,57 +141,69 @@ button{
   left: 0;
   bottom: 0;
   z-index: 999;
-  opacity: 1;
   color: #000;
-  margin: none;
-  pointer-events: none;
 }
-
 .modal-window>div {
   width: 40%;
-  height: 15em;
+  height: 90%;
   position: relative;
-  margin: 10% auto;
+  margin: 2% auto;
   padding: 4rem;
   background: #fff;
   color: #444;
   text-align: center;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: repeat(5, 1fr);
   grid-template-columns: 1fr 1fr 1fr;
   box-shadow: 1px 3px 6px 3px #1d1d1d;
 }
-.modal-window-display {
+.hidden {
   display: none;
 }
 .modal-close {
   color: #aaa;
-  line-height: 50px;
   font-size: 0.8em;
   position: absolute;
   right: 3em;
-  text-align: center;
-  top: 0;
-  width: 4em;
+  top: 1rem;
   text-decoration: none;
 }
-
 .modal-close:hover {
   color: #000;
 }
-
 .modal-window .text {
-  grid-row: 1/1;
   grid-column: 1/span 3;
   font-size: 1em;
-  margin: 0 0 15px;
+  align-self: center;
 }
 .modal-window .yesOrNot {
   grid-column: 2/2;
 }
-
 .modal-window button{
   width: 6em;
   height: 2em;
   color: #000;
+}
+.wallOfFame{
+  grid-column: 1/span 3;
+  grid-row: 3/span 3;
+  margin: 1em;
+}
+.wallOfFame span{
+  font-size: 1.5em;
+}
+.tableFame{
+  margin-top: 1em;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 0.5em;
+  width: 100%;
+  line-height: 3em;
+}
+.titles{
+  width: 100%;
+  border-bottom: 1px #fff solid;
+}
+.tableFame td{
+  font-size: 0.8em;
 }

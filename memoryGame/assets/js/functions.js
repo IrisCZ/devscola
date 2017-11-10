@@ -1,9 +1,7 @@
 var NUMBER_OF_CARDS = 24;
 var container = document.querySelector('.container');
-var attemptsCounter = document.querySelector('.attemptsCounter').innerHTML;
-var attemptsCount = 0;
+var attemptsCounter = document.querySelector('.attemptsCounter');
 var matchesCounter = document.querySelector('.matchesCounter');
-var matchesCount = 0;
 
 var Card = function(container) {
   this.id = getRandomInt();
@@ -50,14 +48,16 @@ function select(card) {
   }
 }
 function compareCards(){
-  if(cardsToCompare[0].id === cardsToCompare[1].id){
+  if(isMatched(cardsToCompare[0], cardsToCompare[1])){
     blockCardsToCompare(cardsToCompare[0], cardsToCompare[1]);
-    counter(++matchesCount, matchesCounter);
-    ++attemptsCounter;
-    if(matchesCount === 12){
+    updateMatches();
+    updateAttempts();
+
+    if(parseInt(matchesCounter.innerHTML) === 12){
       setTimeout(function() {
         stopTime();
         showModal();
+        storageWinnerInfo();
       }, 1000);
     }
     return;
@@ -66,8 +66,7 @@ function compareCards(){
     cardsToCompare[0].reverse();
     cardsToCompare[1].reverse();
     cardsToCompare.splice(0, 2);
-    ++attemptsCounter;
-    attemptsCounter.innerHTML = attemptsCounter;
+    updateAttempts();
 
     console.log(attemptsCounter);
 
@@ -86,9 +85,6 @@ function getRandomInt() {
   return ids.splice(newNum, 1)[0];
 }
 
-function counter(count, counter) {
-  counter.innerHTML = count;
-};
 //timer
 var seconds = 0, minutes = 0, hours = 0,
     t;
@@ -106,13 +102,21 @@ function add() {
   timer();
 }
 function timer() {
-    t = setTimeout(add, 1000);
+    t = setTimeout(add, 800);
 }
 function stopTime() {
   clearTimeout(t);
 }
 timer();
-
+function updateMatches() {
+  matchesCounter.innerHTML = parseInt(matchesCounter.innerHTML) + 1;
+}
+function updateAttempts() {
+  attemptsCounter.innerHTML = parseInt(attemptsCounter.innerHTML) + 1;
+}
+function isMatched(cardA, cardB){
+  return cardA.id === cardB.id;
+}
 function blockCardsToCompare(cardA, cardB) {
   cardA.block();
   cardB.block();
@@ -124,9 +128,56 @@ function refreshPage(){
 }
 
 function showModal(){
-  document.querySelector('.modal-window').classList.add("modal-window-display");
+  document.querySelector('.modal-window').classList.remove("hidden");
 }
 
 function closeModal(){
-  document.querySelector('.modal-window').classList.remove("modal-window-display");
+  document.querySelector('.modal-window').classList.add("hidden");
 }
+
+function storageWinnerInfo(){
+  localStorage.setItem('attempts', 'matchesCounter.innerHTML');
+  localStorage.setItem('time', 'timeCounter.innerHTML');
+  localStorage.setItem('date', 'newDate()');
+  var winner= [];
+  var attempts = localStorage.getItem('attempts');
+  var time = localStorage.getItem('time');
+  var date = localStorage.getItem('date');
+  winner.push(time, attempts, date);
+  console.log(winner);
+  return winner;
+}
+
+function bestWinners(){
+  winner = storageWinnerInfo();
+  var tableFameWinners = 3;
+  var winners = [];
+  var firstWinner = 0;
+  for(var i = 0; i < tableFameWinners; i++){
+    if(winner[0] > firstWinner){
+      winners.push(winner);
+    }
+  }
+  return winners;
+}
+/* table */
+function createTable(tableData) {
+  var tableFame = document.querySelector('.tableFame');
+  var tBody = document.querySelector('tbody');
+  tableData.forEach(function(rowData) {
+    var row = document.createElement('tr');
+
+  rowData.forEach(function(cellData) {
+    var cell = document.createElement('td');
+    cell.appendChild(document.createTextNode(cellData));
+    row.appendChild(cell);
+  });
+
+  tBody.appendChild(row);
+  });
+
+  tableFame.appendChild(tBody);
+}
+var winners =[["00:00", "01", "12.00 07/07/07"], ["00:00", "01", "12.00 07/07/07"], ["00:00", "01", "12.00 07/07/07"],["00:00", "01", "12.00 07/07/07"],["00:00", "01", "12.00 07/07/07"]]
+// var winners = bestWinners();
+createTable(winners);
