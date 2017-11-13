@@ -1,7 +1,9 @@
 * {
     box-sizing: border-box;
 }
-
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
 body {
   font-family: 'Press Start 2P', cursive;
   color: #fff;
@@ -86,6 +88,15 @@ main {
 .card.front12 {
   background-image: url("http://placeskull.com/200/200/000510/38/0");
 }
+.card.front13 {
+  background-image: url("http://placeskull.com/200/200/000510/3/0");
+}
+.card.front14 {
+  background-image: url("http://placeskull.com/200/200/000510/8/0");
+}
+.card.front15 {
+  background-image: url("http://placeskull.com/200/200/000510/19/0");
+}
 .card.blocked {
   opacity: 0.5;
   cursor: not-allowed;
@@ -102,7 +113,7 @@ aside {
 .timerContainer{
   width: 100%;
   height: 4rem;
-  grid-row: 1 / 1;
+  grid-row: 2 / 2;
   border-radius: 4%;
   background-color: rgba(0, 0, 0, .5);
   box-shadow: 1px 3px 6px 3px #1d1d1d;
@@ -131,7 +142,7 @@ button{
   cursor: pointer;
 }
 
-/*modal*/
+/*modal end*/
 
 .modal-window {
   position: fixed;
@@ -145,20 +156,20 @@ button{
 }
 .modal-window>div {
   width: 40%;
-  height: 90%;
+  height: 70%;
   position: relative;
-  margin: 2% auto;
+  margin: 5% auto;
   padding: 4rem;
   background: #fff;
   color: #444;
   text-align: center;
-  display: grid;
-  grid-template-rows: repeat(5, 1fr);
-  grid-template-columns: 1fr 1fr 1fr;
   box-shadow: 1px 3px 6px 3px #1d1d1d;
 }
-.hidden {
-  display: none;
+.modal-window .modalFame{
+  display: grid;
+  height: 90%;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
 }
 .modal-close {
   color: #aaa;
@@ -206,4 +217,96 @@ button{
 }
 .tableFame td{
   font-size: 0.8em;
+}
+/*modal ini*/
+.modal-window .modalStart{
+  display: flex;
+  line-height: 3em;
+}
+.modal-window .modalStart div{
+  width: 50%;
+  align-self: center;
+  cursor: pointer;
+}
+.personalize{
+  padding: 3rem 3rem 3rem 0;
+  border-right: 1px solid #000;
+  transition: transform .4s ease-out;
+}
+.startGame{
+  padding: 3rem 0 3rem 3rem;
+}
+.modalPersonalize{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  line-height: 2em;
+  font-size: 0.8em;
+}
+.layerName{
+  grid-row: 1/1;
+  grid-column: span 3;
+}
+input{
+  width: 28em;
+  height: 3em;
+  padding: 1em;
+  font-family: inherit;
+  color: #787878;
+}
+input:focus {
+  outline: #FF4040 auto 5px;
+}
+
+.layerBgs{
+  grid-row: 2/2;
+  grid-column: span 3;
+}
+.layerLevels{
+  grid-row: 3/3;
+  grid-column: span 3;
+}
+.modal-window.hidden {
+  display: none;
+}
+.modal-window .hidden{
+  display: none;
+}
+.layerSend {
+  grid-row: 4/4;
+  grid-column: span 3;
+  align-self: end;
+}
+.layerSend button{
+  height: 3em;
+}
+.modal-window .selector{
+  width: 7rem;
+  height: 2.5rem;
+  border-radius: 0.2em;
+  border: 1px solid #000;
+  display: inline-flex;
+  cursor: pointer;
+}
+.selector p{
+  position: relative;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.bg1{
+  background-image: url("../img/bg3.jpg");
+  background-size: cover;
+}
+.bg2{
+  background-image: url("../img/bg1.jpg");
+  background-size: cover;
+}
+.bg3{
+  background-image: url("../img/bg2.jpg");
+  background-size: cover;
+}
+.modal-window .selected {
+  border: 2px solid #FF4040;
+  box-shadow:rgba(0,0,0,0.5) 0px 0px 4px;
 }

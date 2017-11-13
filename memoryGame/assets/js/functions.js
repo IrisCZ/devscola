@@ -1,9 +1,25 @@
-var NUMBER_OF_CARDS = 24;
+var numberOfCards = 24;
 var container = document.querySelector('.container');
 var attemptsCounter = document.querySelector('.attemptsCounter');
 var matchesCounter = document.querySelector('.matchesCounter');
+var timeDelay = 600;
 
-var Card = function(container) {
+var cardsToCompare = [];
+var ids = [];
+var cards = [];
+var seconds = 0, minutes = 0, hours = 0, t;
+
+
+function startGame(){
+  setUserPreferences();
+  for(var i = 0; i < numberOfCards; i++){
+    cards.push(new Card(container));
+  }
+  timer();
+}
+
+
+function Card(container) {
   this.id = getRandomInt();
   var frontClass = 'front'+ this.id;
   var htmlElement = document.createElement('li');
@@ -37,10 +53,9 @@ var Card = function(container) {
   }.bind(this);
   htmlElement.onclick = flip;
 }
-var cardsToCompare = [];
 function select(card) {
   if(cardsToCompare.length == 2){
-    setTimeout(function(){}, 1000);
+    setTimeout(function(){}, timeDelay);
   }
   cardsToCompare.push(card);
   if(cardsToCompare.length == 2){
@@ -48,17 +63,18 @@ function select(card) {
   }
 }
 function compareCards(){
+  var cardToFinish = numberOfCards / 2;
   if(isMatched(cardsToCompare[0], cardsToCompare[1])){
     blockCardsToCompare(cardsToCompare[0], cardsToCompare[1]);
     updateMatches();
     updateAttempts();
 
-    if(parseInt(matchesCounter.innerHTML) === 12){
+    if(parseInt(matchesCounter.innerHTML) === (cardToFinish)){
       setTimeout(function() {
         stopTime();
-        showModal();
         storageWinnerInfo();
-      }, 1000);
+        showModal();
+      }, timeDelay);
     }
     return;
   }
@@ -68,16 +84,7 @@ function compareCards(){
     cardsToCompare.splice(0, 2);
     updateAttempts();
 
-    console.log(attemptsCounter);
-
-    // counter(++attemptsCount, attemptsCounter);
-  }, 800);
-}
-var ids = [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12];
-var cards = [];
-
-for(var i = 0; i < NUMBER_OF_CARDS; i++){
-  cards.push(new Card(container));
+  }, timeDelay);
 }
 
 function getRandomInt() {
@@ -86,8 +93,7 @@ function getRandomInt() {
 }
 
 //timer
-var seconds = 0, minutes = 0, hours = 0,
-    t;
+
 function add() {
   seconds++;
   if (seconds >= 60) {
@@ -98,16 +104,15 @@ function add() {
       }
   }
   document.querySelector('.timeCounter').textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
-
   timer();
 }
+
 function timer() {
-    t = setTimeout(add, 800);
+    t = setTimeout(add, 1000);
 }
 function stopTime() {
   clearTimeout(t);
 }
-timer();
 function updateMatches() {
   matchesCounter.innerHTML = parseInt(matchesCounter.innerHTML) + 1;
 }
@@ -128,38 +133,104 @@ function refreshPage(){
 }
 
 function showModal(){
+  var winners = bestWinners();
+  createTable(winners);
   document.querySelector('.modal-window').classList.remove("hidden");
 }
 
-function closeModal(){
-  document.querySelector('.modal-window').classList.add("hidden");
+function closeModal(element){
+  element.closest('.modal-window').classList.add("hidden");
+}
+function showPersonalize(){
+  document.querySelector('.modalPersonalize').classList.remove("hidden");
+}
+function hideStart(){
+  document.querySelector('.modalStart').classList.add("hidden");
+}
+function toggleSelected(element){
+   element.classList.toggle("selected");
+   var siblings = getSiblings(element.parentNode.firstChild, element);
+   for(var i = 0; i < siblings.length; i++){
+     siblings[i].classList.remove("selected");
+   }
+}
+function getSiblings(n, skipMe){
+    var r = [];
+    for ( ; n; n = n.nextSibling )
+       if ( n.nodeType == 1 && n != skipMe)
+          r.push( n );
+    return r;
+};
+
+function bestWinners(){
+  return JSON.parse(localStorage.getItem('winners')) || [];
+}
+function orderWinners(winners){
+  var orderedWinners = [];
+  orderedWinners = winners.sort(function(a, b) {
+    return a.time > b.time;
+  });
+  return orderedWinners.splice(0,5);
 }
 
 function storageWinnerInfo(){
-  localStorage.setItem('attempts', 'matchesCounter.innerHTML');
-  localStorage.setItem('time', 'timeCounter.innerHTML');
-  localStorage.setItem('date', 'newDate()');
-  var winner= [];
-  var attempts = localStorage.getItem('attempts');
-  var time = localStorage.getItem('time');
-  var date = localStorage.getItem('date');
-  winner.push(time, attempts, date);
-  console.log(winner);
-  return winner;
+  var winners = bestWinners() || [];
+  var result = {
+    time: document.querySelector('.timeCounter').innerHTML,
+    attempts: attemptsCounter.innerHTML,
+    date: new Date().toLocaleString()
+  }
+  winners.push(result);
+  winners = orderWinners(winners);
+
+  localStorage.setItem('winners', JSON.stringify(winners));
 }
 
-function bestWinners(){
-  winner = storageWinnerInfo();
-  var tableFameWinners = 3;
-  var winners = [];
-  var firstWinner = 0;
-  for(var i = 0; i < tableFameWinners; i++){
-    if(winner[0] > firstWinner){
-      winners.push(winner);
-    }
+function storagePlayerInfo(){
+  var result = {
+    name: document.querySelector('#name').value,
+    bg: document.querySelector('.bgs .selected').dataset.bg,
+    level: document.querySelector('.levels .selected').dataset.level,
   }
-  return winners;
+
+  localStorage.setItem('info', JSON.stringify(result));
+  startGame();
 }
+function setUserPreferences(){
+  var userInfo = JSON.parse(localStorage.getItem('info'));
+  document.querySelector('.hello span').innerHTML = "Hello " + (userInfo.name || "stranger!");
+  setBg(userInfo.bg);
+  setLevel(userInfo.level);
+}
+function setBg(bg){
+  if(bg === 'bg1'){
+    document.querySelector('main').style.backgroundImage  = "url('assets/img/bg3.jpg')";
+    return;
+  }
+  if(bg === 'bg2'){
+    document.querySelector('main').style.backgroundImage  = "url('assets/img/bg1.jpg')";
+    return;
+  }
+  document.querySelector('main').style.backgroundImage  = "url('assets/img/bg2.jpg')";
+}
+function setLevel(level){
+  if(level === "easy"){
+    document.querySelector('.container').setAttribute("style", "grid-template-rows:repeat(3, 1fr)");
+    numberOfCards = 18;
+    ids.push(1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9);
+    return;
+  }
+  if(level === "hard"){
+    document.querySelector('.container').setAttribute("style", "grid-template-rows:repeat(5, 1fr)");
+    numberOfCards = 30;
+    ids.push(1,2,3,4,5,6,7,8,9,10,11,12,13,14, 15,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
+    return;
+  }
+  document.querySelector('.container').setAttribute("style", "grid-template-rows:repeat(4, 1fr)");
+  numberOfCards = 24;
+  ids.push(1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12);
+}
+
 /* table */
 function createTable(tableData) {
   var tableFame = document.querySelector('.tableFame');
@@ -167,17 +238,14 @@ function createTable(tableData) {
   tableData.forEach(function(rowData) {
     var row = document.createElement('tr');
 
-  rowData.forEach(function(cellData) {
-    var cell = document.createElement('td');
-    cell.appendChild(document.createTextNode(cellData));
-    row.appendChild(cell);
-  });
+    for(prop of ["time", "attempts", "date"]){
+      var cell = document.createElement('td');
+      cell.appendChild(document.createTextNode(rowData[prop]));
+      row.appendChild(cell);
+    }
 
-  tBody.appendChild(row);
+    tBody.appendChild(row);
   });
 
   tableFame.appendChild(tBody);
 }
-var winners =[["00:00", "01", "12.00 07/07/07"], ["00:00", "01", "12.00 07/07/07"], ["00:00", "01", "12.00 07/07/07"],["00:00", "01", "12.00 07/07/07"],["00:00", "01", "12.00 07/07/07"]]
-// var winners = bestWinners();
-createTable(winners);
